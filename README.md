@@ -3,7 +3,7 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./imgs/evox_brand_dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="./imgs/evox_brand_light.svg">
-      <img alt="EvoX Logo" height="50" src="./imgs/evox_logo_light.png">
+    <img alt="EvoX Logo" height="128" width="500px" src="./imgs/evox_brand_dark.svg">
   </picture>
   </a>
   <br>
