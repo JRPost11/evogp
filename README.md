@@ -1,8 +1,8 @@
 <h1 align="center">
   <a href="https://github.com/EMI-Group/evox">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./imgs/evox_brand_dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="./imgs/evox_brand_light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="./imgs/evox_brand_light.svg">
+    <source media="(prefers-color-scheme: light)" srcset="./imgs/evox_brand_dark.svg">
     <img alt="EvoX Logo" height="128" width="500px" src="./imgs/evox_brand_dark.svg">
   </picture>
   </a>
