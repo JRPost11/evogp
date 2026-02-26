@@ -65,10 +65,11 @@ class Func:
     LOOSE_INV = 24
     NEG = 25
     ABS = 26
-    SQRT = 27
-    LOOSE_SQRT = 28
+    SQUARE = 27
+    SQRT = 28
+    LOOSE_SQRT = 29
 
-    END = 29
+    END = 30
 
 
 FUNCS = [
@@ -99,6 +100,7 @@ FUNCS = [
     Func.LOOSE_INV,
     Func.NEG,
     Func.ABS,
+    Func.SQUARE,
     Func.SQRT,
     Func.LOOSE_SQRT,
 ]
@@ -131,6 +133,7 @@ FUNCS_NAMES = [
     "loose_inv",
     "neg",
     "abs",
+    "square",
     "sqrt",
     "loose_sqrt",
 ]
@@ -163,6 +166,7 @@ FUNCS_DISPLAY = [
     "loose_inv",
     "neg",
     "abs",
+    "square",
     "sqrt",
     "loose_sqrt",
 ]
@@ -226,6 +230,7 @@ SYMPY_MAP = {
     Func.LOOSE_INV: LooseInv,
     Func.NEG: lambda x: -x,
     Func.ABS: sp.Abs,
+    Func.SQUARE: lambda x: sp.Pow(x, 2),
     Func.SQRT: sp.sqrt,
     Func.LOOSE_SQRT: lambda x: sp.sqrt(sp.Abs(x)),
     Func.END: None,
@@ -239,9 +244,9 @@ def dict2prob(prob_dict):
     prob = np.zeros(len(FUNCS))
 
     for key, val in prob_dict.items():
-        assert (
-            key in FUNCS_NAMES
-        ), f"Unknown function name: {key}, total functions are {FUNCS_NAMES}"
+        assert key in FUNCS_NAMES, (
+            f"Unknown function name: {key}, total functions are {FUNCS_NAMES}"
+        )
         idx = FUNCS_NAMES.index(key)
         prob[idx] = val
 
@@ -265,9 +270,9 @@ def dict2prob(prob_dict):
     prob = torch.zeros(len(FUNCS))
 
     for key, val in prob_dict.items():
-        assert (
-            key in FUNCS_NAMES
-        ), f"Unknown function name: {key}, total functions are {FUNCS_NAMES}"
+        assert key in FUNCS_NAMES, (
+            f"Unknown function name: {key}, total functions are {FUNCS_NAMES}"
+        )
         idx = FUNCS_NAMES.index(key)
         prob[idx] = val
 
@@ -316,8 +321,8 @@ def inspect_function(func):
     parameters = sig.parameters
     assert len(parameters) > 0, "formula should have at least one parameter"
     for name, param in parameters.items():
-        assert (
-            param.default is inspect.Parameter.empty
-        ), f"formula should not have default parameters, but got {name}={param.default}"
+        assert param.default is inspect.Parameter.empty, (
+            f"formula should not have default parameters, but got {name}={param.default}"
+        )
 
     return list(parameters.keys())

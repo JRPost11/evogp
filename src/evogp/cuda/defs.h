@@ -51,6 +51,7 @@ typedef enum Function
 	LOOSE_INV, // arity: 1, if (|a| < DELTA) { return 1 / DELTA * sign(a) } return 1 / a
 	NEG, // arity: 1, return -a
 	ABS, // arity: 1, return |a|
+	SQUARE, // arity: 1, return a^2
 	SQRT, // arity: 1, return sqrt(a)
 	LOOSE_SQRT,// arity: 1, return sqrt(|a|)
 	END  // not used, the ending notation

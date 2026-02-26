@@ -158,6 +158,8 @@ __device__ inline void _process_node(
             top_val = -var1;
         } else if (function == Function::ABS) {
             top_val = std::abs(var1);
+        } else if (function == Function::SQUARE) {
+            top_val = std::pow(var1, 2);
         } else if (function == Function::SQRT) {
             top_val = std::sqrt(var1);
         } else if (function == Function::LOOSE_SQRT) {
