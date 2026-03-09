@@ -34,11 +34,17 @@ class StandardPipeline(BasePipeline):
         self.best_fitness = float("-inf")
         self.fitness = None
         self.generation_timestamp = None
+        self.evaluation_count = 0
 
-    def step(self):
+    def step(self, start_time):
         # evaluate fitness
         fitnesses = self.problem.evaluate(self.algorithm.forest)
-        
+
+        if self.time_limit is not None and time.time() - start_time > self.time_limit:
+            return
+
+        self.evaluation_count += self.algorithm.pop_size
+
         # transfer nan value in fitnesses to -inf
         fitnesses[torch.isnan(fitnesses)] = -torch.inf
 
@@ -55,32 +61,37 @@ class StandardPipeline(BasePipeline):
 
     def run(self):
         tic = time.time()
+        self.evaluation_count = 0
 
         generation_cnt = 0
         while True:
+            # if self.is_show_details:
+            #     start_time = time.time()
 
-            if self.is_show_details:
-                start_time = time.time()
+            fitness = self.step(tic)
 
-            self.fitness = self.step()
+            if fitness is None:
+                break
 
-            if self.is_show_details:
-                self.show_details(start_time, generation_cnt, self.fitness)
+            self.fitness = fitness
+
+            # if self.is_show_details:
+            #     self.show_details(start_time, generation_cnt, self.fitness)
 
             if (
                 self.fitness_target is not None
                 and self.best_fitness >= self.fitness_target
             ):
-                print("Fitness target reached!")
+                # print("Fitness target reached!")
                 break
 
             if self.time_limit is not None and time.time() - tic > self.time_limit:
-                print("Time limit reached!")
+                # print("Time limit reached!")
                 break
 
             generation_cnt += 1
             if generation_cnt >= self.generation_limit:
-                print("Generation limit reached!")
+                # print("Generation limit reached!")
                 break
 
         return self.best_tree
